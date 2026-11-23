@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html 
+
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Feedback Dashboard</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<div class="form-box">
+
+    <h2>Admin Feedback Dashboard</h2>
+
+    <table border="1" cellpadding="8" cellspacing="0">
+
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Feedback</th>
+                <th>User</th>
+                <th>Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            <tr th:each="f : ${feedbackList}">
+
+                <td th:text="${f.id}"></td>
+
+                <td th:text="${f.message}"></td>
+
+                <td th:text="${f.user.username}"></td>
+
+                <td th:text="${#temporals.format(f.createdAt, 'yyyy-MM-dd')}"></td>
+
+                <td>
+                    <a th:href="@{/feedback/edit/{id}(id=${f.id})}">View</a>
+
+                    <a th:href="@{/admin/edit/{id}(id=${f.id})}">Edit</a>
+
+                    <a th:href="@{/admin/delete/{id}(id=${f.id})}"
+                       onclick="return confirm('Are you sure you want to delete?')">
+                        Delete
+                    </a>
+                </td>
+
+            </tr>
+
+        </tbody>
+
+    </table>
+
+    <br>
+
+    <a th:href="@{/logout}">Logout</a>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html
+
+<head>
+    <meta charset="UTF-8">
+    <title>Feedback Dashboard</title>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+</head>
+
+<body>
+
+<div class="form-box">
+
+    <h2>Feedback Dashboard</h2>
+    <p>Welcome, <span th:text="${session.username}"></span></p>
+    <hr>
+
+    <h3 th:if="${feedback.id == null}">Add Feedback</h3>
+    <h3 th:if="${feedback.id != null}">Edit Feedback</h3>
+
+    <form th:action="${feedback.id == null} ? @{/feedback/save} : @{/feedback/update}" method="post">
+        <input type="hidden" name="id" th:value="${feedback.id}">
+        <textarea name="message" th:text="${feedback.message}" placeholder="Enter your feedback" required></textarea>
+       <button type="submit">Submit</button>
+    </form>
+
+    <hr>
+
+    <h3>Previous Feedback</h3>
+
+    <div th:if="${#lists.isEmpty(feedbackList)}">
+        <p>No feedback submitted yet.</p>
+    </div>
+
+    <div th:each="f : ${feedbackList}">
+        <p th:text="${f.message}"></p>
+        <a th:href="@{/feedback/edit/{id}(id=${f.id})}">
+            Edit
+        </a>
+        <hr>
+    </div>
+
+    <a th:href="@{/logout}">Logout</a>
+
+</div>
+
+</body>
+</html>
